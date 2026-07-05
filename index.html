@@ -62,7 +62,7 @@
 </head>
 <body class="text-slate-100">
 
-    <!-- Banner -->
+<!-- Banner (Fixing the Countdown & Button) -->
     <div class="bg-gradient-to-r from-pink-600 to-rose-500 text-white py-2 text-center text-sm font-bold relative z-50">
         <span>Limited time offer: 6 MONTHS FREE </span>
         <span class="ml-4 bg-black/20 px-2 py-0.5 rounded">
@@ -71,30 +71,42 @@
         <button onclick="togglePricingModal()" class="ml-4 underline text-xs">Claim now —</button>
     </div>
 
-    <!-- Navbar Update -->
-<nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-50">
-    <div class="flex items-center gap-8"> <!-- Wrappped left side to allow links -->
-        <div class="text-2xl font-extrabold tracking-tighter text-white flex items-center gap-2">
-            <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-sm">IG</div>
-            AI PHoto<span class="text-indigo-500">Studio</span>
+    <!-- Navbar (Fixing the Layout & Adding New Links) -->
+    <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-50">
+        <!-- Left Side: Brand + New Links -->
+        <div class="flex items-center gap-8">
+            <div class="text-2xl font-extrabold tracking-tighter text-white flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-sm">G</div>
+                AI PHOTO<span class="text-indigo-500">Studio</span>
+            </div>
+            
+            <!-- आपके नए लिंक्स (Desktop पर दिखेंगे) -->
+            <div class="hidden md:flex gap-6 text-sm font-medium text-slate-400">
+                <a href="https://bestaitools.co.in/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition flex items-center gap-1">
+                    Best AI Tools <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+                <a href="https://userfinetools.store/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition flex items-center gap-1">
+                    Userfine Tools <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+            </div>
         </div>
-        
-        
-        <div class="hidden md:flex gap-6 text-sm font-medium text-slate-400">
-            <a href="https://bestaitools.co.in/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition flex items-center gap-1">
-        Best AI Tools <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-    </a>
-    <a href="https://userfinetools.store/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition flex items-center gap-1">
-        Userfine Tools <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-    </a>
-        </div>
-    </div>
 
-    <div id="auth-buttons">
-        <button id="loginBtn" class="bg-white text-slate-900 px-6 py-2 rounded-full font-bold hover:bg-indigo-50 transition">Login / Sign Up</button>
-    </div>
-    
-</nav>
+        <!-- Right Side: Auth Buttons (अब यह गायब नहीं होगा) -->
+        <div id="auth-buttons">
+            <button id="loginBtn" class="bg-white text-slate-900 px-6 py-2 rounded-full font-bold hover:bg-indigo-50 transition">Login / Sign Up</button>
+        </div>
+
+        <!-- User Profile Section (Existing Logic) -->
+        <div id="user-profile" class="hidden flex items-center gap-4">
+            <div class="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full border border-white/20">
+                <i class="fa-solid fa-coins text-yellow-400"></i>
+                <span id="user-credits" class="text-sm font-bold">0</span>
+            </div>
+            <button onclick="togglePricingModal()" class="bg-amber-500 text-white px-4 py-1.5 rounded-full text-sm font-bold hover:bg-amber-600 transition">Get Credits</button>
+            <span id="user-email" class="text-sm font-medium text-slate-300"></span>
+            <button id="logoutBtn" class="text-sm text-red-400 font-bold hover:underline">Logout</button>
+        </div>
+    </nav>
 
     <!-- Hero -->
     <header class="hero-bg relative overflow-hidden min-h-[80vh] flex items-center">
