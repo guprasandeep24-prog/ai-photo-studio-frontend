@@ -11,13 +11,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://www.gstatic.com">
 
-    <!-- Firebase Compat SDK: simple script tags, koi ES module chain nahi -->
-    <!-- Ye tab spinning ka ASLI fix hai -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" defer></script>
-
-    <!-- Tailwind: defer se load hoga — DOM parse hone ke BAAD chalega, tab nahi rukegi -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Font Awesome: async trick — print media se load hoga, apply hone par all media -->
     <!-- Ye tab ko spin hone se rokta hai -->
@@ -342,9 +336,9 @@
         </div>
     </div>
 
-<script defer>
-    // Firebase Compat SDK use ho raha hai (script tag se load, no ES module chain)
-    // Isse browser ka tab spinning band ho jaayega
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAB5Q7-Sj4rfBAeOT9iDJPpEAIR6JLRhDA",
@@ -356,8 +350,8 @@
         measurementId: "G-HRKKHJKDJ8"
     };
 
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const BASE_URL = "https://ai-photo-studio-e3so.onrender.com";
 
     // Global helper for fetch with automatic timeout
@@ -400,9 +394,9 @@
         const password = document.getElementById('authPassword').value;
         try {
             if (window.isLoginMode) {
-                await auth.signInWithEmailAndPassword(email, password);
+                await signInWithEmailAndPassword(auth, email, password);
             } else {
-                const signUpResult = await auth.createUserWithEmailAndPassword(email, password);
+                const signUpResult = await createUserWithEmailAndPassword(auth, email, password);
                 const newUser = signUpResult.user;
                 await fetch(`${BASE_URL}/register`, {
                     method: 'POST',
@@ -715,7 +709,7 @@
         }
     });
 
-    window.handleLogout = async () => { await auth.signOut(); location.reload(); };
+    window.handleLogout = async () => { await signOut(auth); location.reload(); };
 
     // ✅ NEW: Try Another Way - page reload nahi, wapas categories page pe jaao
     window.tryAnotherWay = () => {
@@ -825,7 +819,7 @@
         document.getElementById('categories-section').classList.remove('hidden');
     };
 
-    auth.onAuthStateChanged(async (user) => {
+    onAuthStateChanged(auth, async (user) => {
         const authButtons = document.getElementById('auth-buttons');
         const userProfile = document.getElementById('user-profile');
         const userEmailSpan = document.getElementById('user-email');
