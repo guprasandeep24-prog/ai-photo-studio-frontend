@@ -4,10 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Photo Studio | Professional AI Transformation</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Razorpay: lazily loaded only when user clicks Buy (prevents tab spinning) -->
-    <!-- Google tag (gtag.js) -->
+
+    <!-- SPEED FIX: Preconnect karo taaki DNS/SSL pehle se ready rahe -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://www.gstatic.com">
+
+    <!-- Tailwind: defer se load hoga — DOM parse hone ke BAAD chalega, tab nahi rukegi -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
+
+    <!-- Font Awesome: async trick — print media se load hoga, apply hone par all media -->
+    <!-- Ye tab ko spin hone se rokta hai -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
+
+    <!-- Razorpay: lazily loaded only when user clicks Buy -->
+    <!-- Google Analytics: async hai, page block nahi karta -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1EE8MG0DHL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -17,6 +30,7 @@
     </script>
 
     <style>
+        /* Google Fonts: display=swap se page block nahi hoga */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: #0f172a; }
         
