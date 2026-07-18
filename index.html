@@ -4,22 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Photo Studio | Professional AI Transformation</title>
-
-    <!-- SPEED FIX: Preconnect karo taaki DNS/SSL pehle se ready rahe -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://www.gstatic.com">
-
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Font Awesome: async trick — print media se load hoga, apply hone par all media -->
-    <!-- Ye tab ko spin hone se rokta hai -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
-
-    <!-- Razorpay: lazily loaded only when user clicks Buy -->
-    <!-- Google Analytics: async hai, page block nahi karta -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1EE8MG0DHL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -29,7 +15,6 @@
     </script>
 
     <style>
-        /* Google Fonts: display=swap se page block nahi hoga */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: #0f172a; }
         
@@ -42,7 +27,7 @@
         .glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            -webkit-backdropfilter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -123,7 +108,7 @@
             </div>
         </div>
     </header>
-<!-- Elegant Footer -->
+    <!-- Elegant Footer -->
 <footer class="glass border-t border-white/10 py-10 mt-20">
     <div class="container mx-auto px-6 text-center">
         <h4 class="text-white font-bold mb-4 text-lg">Explore Our AI Universe ✨</h4>
@@ -134,6 +119,7 @@
         <p class="text-xs text-slate-500">© 2026 AI Photo Studio. All rights reserved.</p>
     </div>
 </footer>
+
     <!-- Dashboard Section -->
     <section id="dashboard-section" class="hidden container mx-auto px-6 py-10">
         <div class="flex justify-between items-end mb-8">
@@ -183,6 +169,14 @@
                 <h3 class="text-2xl font-bold mb-1 text-white">🎭 Magic Portrait</h3>
                 <p class="text-slate-400 text-sm">Upload your photo + Prompt to transform your identity!</p>
             </div>
+
+            <div onclick="openPromptStudio()" class="category-card cursor-pointer glass p-8 rounded-3xl text-center group border-2 border-amber-500/30 hover:border-amber-500 transition">
+                <div class="w-16 h-16 bg-amber-500/20 text-amber-400 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-1 text-white">💡 AI Prompt Studio</h3>
+                <p class="text-slate-400 text-sm">Apne business ke liye ready-to-use AI prompts paayein!</p>
+            </div>
         </div>
     </section>
 
@@ -224,6 +218,59 @@
                 <button id="generate-portrait-btn" class="w-full py-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg transform transition-all active:scale-95 flex items-center justify-center gap-2">
                     <span id="portrait-btn-text">Generate Portrait 🎭</span>
                     <div id="portrait-btn-spinner" class="hidden animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI PROMPT STUDIO MODAL -->
+    <div id="promptStudioModal" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex items-center justify-center z-[150] p-4 overflow-y-auto">
+        <div class="glass p-8 rounded-[2.5rem] shadow-2xl w-full max-w-lg text-center border border-white/20 my-8">
+            <button onclick="closePromptStudio()" class="float-right text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="text-3xl font-bold mb-2 text-amber-400 pt-4">AI Prompt Studio</h2>
+            <p class="text-slate-400 mb-6 text-sm">Apna profession aur kaam batayein, turant ek ready prompt paayein!</p>
+
+            <div class="space-y-4 text-left">
+                <div>
+                    <label class="block text-slate-400 text-xs font-bold uppercase tracking-wide mb-2">Profession / Niche</label>
+                    <select id="promptProfession" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <option value="Real Estate Agent">Real Estate Agent</option>
+                        <option value="Coaching Center / Teacher">Coaching Center / Teacher</option>
+                        <option value="D2C / E-commerce Brand">D2C / E-commerce Brand</option>
+                        <option value="Salon / Spa">Salon / Spa</option>
+                        <option value="Freelance Lawyer">Freelance Lawyer</option>
+                        <option value="Fitness Coach">Fitness Coach</option>
+                        <option value="custom">Other (Type your own)</option>
+                    </select>
+                    <input type="text" id="promptProfessionCustom" placeholder="Apna profession likhein" class="hidden w-full mt-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+                <div>
+                    <label class="block text-slate-400 text-xs font-bold uppercase tracking-wide mb-2">Tone</label>
+                    <select id="promptTone" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <option value="Professional">Professional</option>
+                        <option value="Friendly">Friendly</option>
+                        <option value="Persuasive / Sales-focused">Persuasive / Sales-focused</option>
+                        <option value="Formal">Formal</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-400 text-xs font-bold uppercase tracking-wide mb-2">Aapko kis kaam ke liye prompt chahiye?</label>
+                    <textarea id="promptTask" rows="3" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none" placeholder="jaise: naye customer ki inquiry ka WhatsApp jawab"></textarea>
+                </div>
+            </div>
+
+            <button id="generatePromptBtn" class="w-full mt-6 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-2xl shadow-lg transform transition-all active:scale-95 flex items-center justify-center gap-2">
+                <span id="promptBtnText">Prompt Generate Karein ✨</span>
+                <div id="promptBtnSpinner" class="hidden animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+            </button>
+
+            <div id="promptResultBox" class="hidden mt-6 text-left bg-black/30 border border-amber-500/30 rounded-2xl p-5 relative">
+                <span class="absolute -top-3 right-4 bg-amber-500 text-slate-900 text-[10px] font-bold px-2.5 py-1 rounded uppercase">SOP</span>
+                <p id="promptResultTitle" class="text-white font-bold mb-3 pr-14"></p>
+                <div id="promptResultText" class="text-slate-300 text-sm font-mono whitespace-pre-wrap bg-black/30 rounded-xl p-4 leading-relaxed"></div>
+                <p id="promptResultTip" class="text-amber-300/80 text-xs mt-3 bg-amber-500/10 rounded-lg p-3"></p>
+                <button id="copyPromptBtn" class="mt-3 border border-amber-500 text-amber-400 hover:bg-amber-500/10 font-bold text-xs rounded-lg px-4 py-2">
+                    <i class="fa-solid fa-copy mr-1"></i> Prompt Copy Karein
                 </button>
             </div>
         </div>
@@ -295,13 +342,12 @@
         </div>
     </div>
 
-    <!-- ✅ FIX: Success Modal - scrollable + Try Another Way button working -->
+    <!-- ✅ SUCCESS MODAL -->
     <div id="successModal" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex items-start justify-center z-50 p-4 overflow-y-auto">
         <div class="bg-white p-6 rounded-[2rem] text-center max-w-sm w-full shadow-2xl text-slate-900 my-auto mt-4 mb-4">
             <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-check"></i></div>
             <h2 id="successTitle" class="text-2xl font-bold mb-1">Magic Done!</h2>
             <p id="successSubtitle" class="text-slate-500 mb-4 text-sm">Your professional photo is ready.</p>
-            
             <div class="relative group mb-6">
     <div class="comparison-container border-2 border-slate-100 shadow-inner">
         <div class="after-image w-full h-full">
@@ -314,12 +360,12 @@
         <input type="range" id="comparisonSlider" class="slider-input" min="0" max="100" value="50">
     </div>
 </div>
+            
 
             <div class="flex flex-col gap-3">
                 <a id="downloadBtn" href="#" download="my-ai-photo.png" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-bold transition flex items-center justify-center">
                     <i class="fa-solid fa-download mr-2"></i> Download
                 </a>
-                <!-- ✅ FIX: enhanceBtn ab yahan hai - pehle missing tha! -->
                 <button id="enhanceBtn" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 rounded-xl font-bold hover:opacity-90 transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Enhance to 4K ✨
                 </button>
@@ -364,19 +410,57 @@
     const auth = getAuth(app);
     const BASE_URL = "https://ai-photo-studio-backend.onrender.com";
 
-    // Global helper for fetch with automatic timeout
-    async function fetchWithTimeout(url, options, timeoutMs = 120000) {
-        const controller = new AbortController();
-        const id = setTimeout(() => controller.abort(), timeoutMs);
-        try {
-            const response = await fetch(url, { ...options, signal: controller.signal });
-            clearTimeout(id);
-            return response;
-        } catch (error) {
-            clearTimeout(id);
-            throw error;
+    // ✅ ULTIMATE LOADING MANAGER
+    window.setLoadingState = (isLoading, type = 'global') => {
+        const modal = document.getElementById('loadingModal');
+        if (isLoading) modal.classList.remove('hidden');
+        else modal.classList.add('hidden');
+
+        if (type === 'portrait') {
+            const btnText = document.getElementById('portrait-btn-text');
+            const btnSpinner = document.getElementById('portrait-btn-spinner');
+            if (isLoading) {
+                btnText.classList.add('hidden');
+                btnSpinner.classList.remove('hidden');
+            } else {
+                btnText.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+            }
         }
+    };
+
+    // Global helper for fetch with automatic timeout
+    // 🚀 Yeh "Super Debugger" hai. Agar kuch kaam nahi karega, 
+// toh ye spinner band karke bata dega ki "URL galat hai" ya "Server down hai".
+async function fetchWithTimeout(url, options, timeoutMs = 150000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeoutMs);
+    
+    console.log("📡 Attempting to call:", url); // Debugging ke liye
+
+    try {
+        const response = await fetch(url, { ...options, signal: controller.signal });
+        clearTimeout(id);
+        
+        if (!response.ok) {
+            // Agar server 404 ya 500 de raha hai, toh yahan se error pakad lo
+            const errorText = await response.text(); 
+            console.error("❌ Server responded with error:", response.status, errorText);
+            throw new Error(`Server Error: ${response.status}`);
+        }
+        
+        return response;
+    } catch (error) {
+        clearTimeout(id);
+        console.error("❌ Fetch Error:", error.name, error.message);
+        
+        // 💡 Agar URL galat hai toh ye error dikhayega
+        if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+            throw new Error("Connection Failed! Check if your BASE_URL is correct.");
+        }
+        throw error;
     }
+}
 
     window.selectedCategory = ""; 
     window.selectedGender = ""; 
@@ -385,7 +469,7 @@
     window.isLoginMode = true;
     window.selectedTemplateIndex = null;
     window.allTemplates = {};
-    window.portraitFile = null; // ✅ NEW: Magic Portrait ke liye
+    window.portraitFile = null;
 
     window.toggleAuthModal = () => document.getElementById('authModal').classList.toggle('hidden');
     window.togglePricingModal = () => document.getElementById('pricingModal').classList.toggle('hidden');
@@ -422,24 +506,17 @@
     window.handleUpscale = async function() {
         const user = auth.currentUser;
         const currentImageUrl = document.getElementById('resultImage').src;
-
         if (!user) return alert("Please Login first!");
         if (!currentImageUrl) return alert("No image to upscale!");
 
-        document.getElementById('loadingModal').classList.remove('hidden');
-
+        window.setLoadingState(true, 'global');
         try {
             const response = await fetchWithTimeout(`${BASE_URL}/upscale`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userId: user.uid,
-                    email: user.email,
-                    imageUrl: currentImageUrl
-                })
-            }, 180000); // 3 min timeout for upscaling
+                body: JSON.stringify({ userId: user.uid, email: user.email, imageUrl: currentImageUrl })
+            });
             const result = await response.json();
-
             if (result.success) {
                 document.getElementById('resultImage').src = result.ai_image_url;
                 document.getElementById('downloadBtn').href = result.ai_image_url;
@@ -448,31 +525,23 @@
                 throw new Error(result.error || "Upscaling failed");
             }
         } catch (error) {
-            const msg = error.name === 'AbortError' ? "Request timed out. AI is taking too long." : error.message;
-            alert("❌ Error: " + msg);
+            alert("❌ Error: " + (error.name === 'AbortError' ? "Timeout. Try again." : error.message));
         } finally {
-            document.getElementById('loadingModal').classList.add('hidden');
+            window.setLoadingState(false, 'global');
         }
     };
 
     window.handleGalleryUpscale = async function(btn, imageUrl) {
         const user = auth.currentUser;
         if (!user) return alert("Please Login first!");
-
-        document.getElementById('loadingModal').classList.remove('hidden');
-
+        window.setLoadingState(true, 'global');
         try {
             const response = await fetchWithTimeout(`${BASE_URL}/upscale`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userId: user.uid,
-                    email: user.email,
-                    imageUrl: imageUrl
-                })
-            }, 180000);
+                body: JSON.stringify({ userId: user.uid, email: user.email, imageUrl: imageUrl })
+            });
             const result = await response.json();
-
             if (result.success) {
                 const card = btn.closest('.bg-gray-800');
                 const img = card.querySelector('img');
@@ -482,14 +551,12 @@
                 throw new Error(result.error || "Upscaling failed");
             }
         } catch (error) {
-            const msg = error.name === 'AbortError' ? "Timeout: Try again." : error.message;
-            alert("❌ Error: " + msg);
+            alert("❌ Error: " + (error.name === 'AbortError' ? "Timeout. Try again." : error.message));
         } finally {
-            document.getElementById('loadingModal').classList.add('hidden');
+            window.setLoadingState(false, 'global');
         }
     };
 
-    // ✅ FIX: enhanceBtn ab HTML mein hai, to ye handler kaam karega
     document.getElementById('enhanceBtn').onclick = window.handleUpscale;
 
     // --- MAGIC PROMPT ---
@@ -502,83 +569,70 @@
     document.getElementById('magicSubmitBtn').addEventListener('click', async function() {
         const user = auth.currentUser;
         const promptText = document.getElementById('promptInput').value.trim();
-
         if (!user) return alert("Please Login first!");
         if (!promptText) return alert("Please enter a prompt!");
 
-        document.getElementById('loadingModal').classList.remove('hidden');
-
+        window.setLoadingState(true, 'global');
         try {
             const response = await fetchWithTimeout(`${BASE_URL}/magic-prompt`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userId: user.uid,
-                    email: user.email,
-                    prompt: promptText
-                })
+                body: JSON.stringify({ userId: user.uid, email: user.email, prompt: promptText })
             });
-
-            const result = await response.json();
+            
+            // BUFFER CHECK: Validate JSON
+            let result;
+            try {
+                result = await response.json();
+            } catch (e) {
+                throw new Error("Server returned invalid data. Try a shorter prompt.");
+            }
 
             if (result.success) {
                 document.getElementById('resultImage').src = result.ai_image_url;
                 document.getElementById('downloadBtn').href = result.ai_image_url;
-                
                 document.getElementById('successTitle').innerText = "Magic Done!";
                 document.getElementById('successSubtitle').innerText = "Your masterpiece is ready.";
                 document.getElementById('beforeImageWrapper').style.display = 'none';
                 document.getElementById('sliderHandle').style.display = 'none';
                 document.getElementById('comparisonSlider').style.display = 'none';
-
                 closeMagicPrompt();
                 document.getElementById('successModal').classList.remove('hidden');
             } else {
                 throw new Error(result.error || "Generation failed");
             }
         } catch (error) {
-            const msg = error.name === 'AbortError' ? "AI is taking too long. Try a shorter prompt." : error.message;
-            alert("❌ Error: " + msg);
+            alert("❌ Error: " + (error.name === 'AbortError' ? "AI is taking too long. Try again." : error.message));
         } finally {
-            document.getElementById('loadingModal').classList.add('hidden');
+            window.setLoadingState(false, 'global');
         }
     });
 
-    // ✅ NEW: MAGIC PORTRAIT - Open/Close functions (pehle ye define hi nahi thi!)
-    window.openMagicPortrait = () => {
-        document.getElementById('magicPortraitModal').classList.remove('hidden');
-    };
-
+    // --- MAGIC PORTRAIT ---
+    window.openMagicPortrait = () => document.getElementById('magicPortraitModal').classList.remove('hidden');
     window.closeMagicPortrait = () => {
         document.getElementById('magicPortraitModal').classList.add('hidden');
         document.getElementById('portrait-prompt-input').value = '';
-        // Reset file preview
         window.portraitFile = null;
         document.getElementById('portrait-file-input').value = '';
         document.getElementById('portrait-image-preview').classList.add('hidden');
-        document.getElementById('portrait-image-preview').src = '';
         document.getElementById('upload-placeholder').classList.remove('hidden');
         document.getElementById('remove-portrait-btn').classList.add('hidden');
-        // Reset button state
-        document.getElementById('portrait-btn-text').classList.remove('hidden');
-        document.getElementById('portrait-btn-spinner').classList.add('hidden');
+        window.setLoadingState(false, 'portrait');
     };
 
-    // ✅ NEW: Portrait file upload preview handler (pehle ye missing tha!)
     const portraitUploadWrapper = document.getElementById('portrait-upload-wrapper');
     const portraitFileInput = document.getElementById('portrait-file-input');
     const portraitImagePreview = document.getElementById('portrait-image-preview');
     const uploadPlaceholder = document.getElementById('upload-placeholder');
     const removePortraitBtn = document.getElementById('remove-portrait-btn');
 
-    // Click on wrapper → open file picker (but not if clicking remove button)
     portraitUploadWrapper.addEventListener('click', (e) => {
         if (e.target !== removePortraitBtn && !removePortraitBtn.contains(e.target)) {
             portraitFileInput.click();
         }
     });
 
-    // File selected → show preview
     portraitFileInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
@@ -594,18 +648,16 @@
         }
     });
 
-    // Remove button → clear preview
     removePortraitBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         window.portraitFile = null;
         portraitFileInput.value = '';
         portraitImagePreview.classList.add('hidden');
-        portraitImagePreview.src = '';
         uploadPlaceholder.classList.remove('hidden');
         removePortraitBtn.classList.add('hidden');
     });
 
-    // ✅ NEW: Magic Portrait SUBMIT handler (pehle ye completely missing tha!)
+    // ✅ FIXED: MAGIC PORTRAIT SUBMIT HANDLER (BULLPROOF)
     document.getElementById('generate-portrait-btn').addEventListener('click', async function() {
         const user = auth.currentUser;
         const prompt = document.getElementById('portrait-prompt-input').value.trim();
@@ -614,10 +666,8 @@
         if (!window.portraitFile) return alert("Please upload your photo first!");
         if (!prompt) return alert("Please describe your new look!");
 
-        // Show loading state on button
-        document.getElementById('portrait-btn-text').classList.add('hidden');
-        document.getElementById('portrait-btn-spinner').classList.remove('hidden');
-        document.getElementById('loadingModal').classList.remove('hidden');
+        // Start Loading
+        window.setLoadingState(true, 'portrait');
 
         try {
             const formData = new FormData();
@@ -626,37 +676,108 @@
             formData.append('prompt', prompt);
             formData.append('image', window.portraitFile);
 
-            // 3 minute timeout for magic portrait (3 AI steps run)
             const response = await fetchWithTimeout(`${BASE_URL}/magic-portrait`, {
                 method: 'POST',
                 body: formData
-            }, 180000);
+            });
 
-            const result = await response.json();
+            // CRITICAL: Handle JSON error properly
+            let result;
+            try {
+                result = await response.json();
+            } catch (e) {
+                throw new Error("Server Error. AI took too long or crashed.");
+            }
 
             if (result.success) {
-                // Show result in success modal
                 document.getElementById('resultImage').src = result.ai_image_url;
                 document.getElementById('downloadBtn').href = result.ai_image_url;
                 document.getElementById('successTitle').innerText = "Portrait Ready! 🎭";
                 document.getElementById('successSubtitle').innerText = "Your magical portrait is ready.";
-                // Hide comparison slider (no before/after for portrait)
                 document.getElementById('beforeImageWrapper').style.display = 'none';
                 document.getElementById('sliderHandle').style.display = 'none';
                 document.getElementById('comparisonSlider').style.display = 'none';
-
                 closeMagicPortrait();
                 document.getElementById('successModal').classList.remove('hidden');
             } else {
                 throw new Error(result.error || "Portrait generation failed");
             }
         } catch (error) {
-            const msg = error.name === 'AbortError' ? "AI is taking too long. Please try again." : error.message;
-            alert("❌ Error: " + msg);
+            console.error("❌ Error:", error);
+            alert("❌ " + (error.name === 'AbortError' ? "Timeout! Try again." : error.message));
         } finally {
-            document.getElementById('portrait-btn-text').classList.remove('hidden');
-            document.getElementById('portrait-btn-spinner').classList.add('hidden');
-            document.getElementById('loadingModal').classList.add('hidden');
+            // NO MATTER WHAT HAPPENS, HIDE SPINNER
+            window.setLoadingState(false, 'portrait');
+        }
+    });
+
+    // --- AI PROMPT STUDIO ---
+    window.openPromptStudio = () => document.getElementById('promptStudioModal').classList.remove('hidden');
+    window.closePromptStudio = () => {
+        document.getElementById('promptStudioModal').classList.add('hidden');
+        document.getElementById('promptResultBox').classList.add('hidden');
+        document.getElementById('promptTask').value = '';
+    };
+
+    document.getElementById('promptProfession').addEventListener('change', function() {
+        document.getElementById('promptProfessionCustom').classList.toggle('hidden', this.value !== 'custom');
+    });
+
+    document.getElementById('copyPromptBtn').addEventListener('click', function() {
+        const text = document.getElementById('promptResultText').textContent;
+        navigator.clipboard.writeText(text);
+        this.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Copied!';
+        setTimeout(() => { this.innerHTML = '<i class="fa-solid fa-copy mr-1"></i> Prompt Copy Karein'; }, 1600);
+    });
+
+    document.getElementById('generatePromptBtn').addEventListener('click', async function() {
+        const user = auth.currentUser;
+        if (!user) return alert("Please Login first!");
+
+        const professionSelect = document.getElementById('promptProfession');
+        const profession = professionSelect.value === 'custom'
+            ? document.getElementById('promptProfessionCustom').value.trim()
+            : professionSelect.value;
+        const tone = document.getElementById('promptTone').value;
+        const task = document.getElementById('promptTask').value.trim();
+
+        if (!profession || !task) return alert("Please fill profession and task!");
+
+        const btnText = document.getElementById('promptBtnText');
+        const btnSpinner = document.getElementById('promptBtnSpinner');
+        btnText.classList.add('hidden');
+        btnSpinner.classList.remove('hidden');
+        document.getElementById('promptResultBox').classList.add('hidden');
+
+        try {
+            const response = await fetchWithTimeout(`${BASE_URL}/generate-prompt`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: user.uid, email: user.email, profession, task, tone })
+            });
+
+            let result;
+            try {
+                result = await response.json();
+            } catch (e) {
+                throw new Error("Server error, try again.");
+            }
+
+            if (result.success) {
+                document.getElementById('promptResultTitle').innerText = result.title || 'Your Prompt';
+                document.getElementById('promptResultText').innerText = result.prompt || '';
+                document.getElementById('promptResultTip').innerText = 'Tip: ' + (result.sopTip || '');
+                document.getElementById('promptResultBox').classList.remove('hidden');
+                const creditsSpan = document.getElementById('user-credits');
+                if (creditsSpan) creditsSpan.innerText = Math.max(0, parseInt(creditsSpan.innerText || '0') - 1);
+            } else {
+                throw new Error(result.error || "Prompt generation failed");
+            }
+        } catch (error) {
+            alert("❌ " + (error.name === 'AbortError' ? "Timeout! Try again." : error.message));
+        } finally {
+            btnText.classList.remove('hidden');
+            btnSpinner.classList.add('hidden');
         }
     });
 
@@ -665,7 +786,7 @@
         const user = auth.currentUser;
         if (!user) return alert("Please Login first!");
         if (!window.selectedCategory || !window.selectedGender || window.selectedTemplateIndex === null || !window.selectedFile) {
-            return alert("Please complete all steps (Category, Gender, Style, and Photo)");
+            return alert("Please complete all steps!");
         }
 
         const formData = new FormData();
@@ -676,7 +797,7 @@
         formData.append('templateIndex', window.selectedTemplateIndex); 
         formData.append('image', window.selectedFile);
 
-        document.getElementById('loadingModal').classList.remove('hidden');
+        window.setLoadingState(true, 'global');
 
         try {
             const response = await fetchWithTimeout(`${BASE_URL}/upload`, { 
@@ -684,7 +805,10 @@
                 body: formData 
             });
             
-            const result = await response.json();
+            let result;
+            try {
+                result = await response.json();
+            } catch (e) { throw new Error("Server error during generation."); }
             
             if (result.success) {
                 document.getElementById('successTitle').innerText = "Magic Done!";
@@ -698,7 +822,6 @@
                 document.getElementById('downloadBtn').href = result.ai_image_url;
                 document.getElementById('successModal').classList.remove('hidden');
                 
-                // Slider Init
                 const slider = document.getElementById('comparisonSlider');
                 const beforeWrapper = document.getElementById('beforeImageWrapper');
                 const handle = document.getElementById('sliderHandle');
@@ -712,43 +835,28 @@
                 throw new Error(result.error || "AI Generation failed");
             }
         } catch (error) {
-            const msg = error.name === 'AbortError' ? "Connection timed out. The AI task is too heavy." : error.message;
-            alert("❌ Error: " + msg);
+            alert("❌ " + error.message);
         } finally {
-            document.getElementById('loadingModal').classList.add('hidden');
+            window.setLoadingState(false, 'global');
         }
     });
 
     window.handleLogout = async () => { await signOut(auth); location.reload(); };
 
-    // ✅ NEW: Try Another Way - page reload nahi, wapas categories page pe jaao
     window.tryAnotherWay = () => {
-        // Success modal band karo
         document.getElementById('successModal').classList.add('hidden');
-
-        // Result image reset karo
         document.getElementById('resultImage').src = '';
         document.getElementById('downloadBtn').href = '#';
-
-        // Comparison slider reset
         document.getElementById('beforeImageWrapper').style.display = 'block';
         document.getElementById('sliderHandle').style.display = 'flex';
         document.getElementById('comparisonSlider').style.display = 'block';
         document.getElementById('comparisonSlider').value = 50;
         document.getElementById('beforeImageWrapper').style.width = '50%';
-
-        // Upload section band karo
         document.getElementById('upload-section').classList.add('hidden');
-        // Dashboard hidden karo
         document.getElementById('dashboard-section').classList.add('hidden');
-        // Categories section dikhao
         document.getElementById('categories-section').classList.remove('hidden');
 
-        // Sab states reset karo
-        window.selectedCategory = '';
-        window.selectedGender = '';
-        window.selectedFile = null;
-        window.selectedTemplateIndex = null;
+        window.selectedCategory = ''; window.selectedGender = ''; window.selectedTemplateIndex = null;
         window.portraitFile = null;
         document.getElementById('imageInput').value = '';
         document.getElementById('preview-container').classList.add('hidden');
@@ -756,8 +864,6 @@
         document.getElementById('btn-man').classList.remove('active');
         document.getElementById('btn-woman').classList.remove('active');
         document.getElementById('template-selection-container').classList.add('hidden');
-
-        // Page top pe scroll karo
         document.getElementById('categories-section').scrollIntoView({ behavior: 'smooth' });
     };
 
@@ -765,7 +871,7 @@
         try {
             const res = await fetch(`${BASE_URL}/templates`);
             window.allTemplates = await res.json();
-        } catch (err) { console.error("❌ Failed to fetch templates:", err); }
+        } catch (err) { console.error("❌ Templates error:", err); }
     }
 
     window.displayTemplates = (category, gender) => {
@@ -863,7 +969,6 @@
     async function fetchUserPhotos(userId) {
         const grid = document.getElementById('photo-grid');
         const noPhotosMsg = document.getElementById('no-photos-msg');
-        
         try {
             const response = await fetch(`${BASE_URL}/my-photos?userId=${userId}`);
             const photos = await response.json();
@@ -913,11 +1018,9 @@
         }
     });
 
-    // Razorpay: sirf tab load karo jab user Buy click kare
-    // Isse page load pe browser tab spinning band ho jaayega
     async function loadRazorpaySDK() {
         return new Promise((resolve, reject) => {
-            if (window.Razorpay) { resolve(); return; } // already loaded
+            if (window.Razorpay) { resolve(); return; }
             const script = document.createElement('script');
             script.src = 'https://checkout.razorpay.com/v1/checkout.js';
             script.onload = () => resolve();
@@ -930,7 +1033,6 @@
         const user = auth.currentUser;
         if (!user) return alert("Please login first!");
         try {
-            // Razorpay SDK load karo (pehli baar thodi der lagegi, baad mein instant)
             await loadRazorpaySDK();
             const response = await fetch(`${BASE_URL}/api/payments/create-order`, {
                 method: 'POST',
@@ -1004,8 +1106,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         startTimer(86400); 
     });
-    startTimer(86400);
 </script>
-
 </body>
 </html>
